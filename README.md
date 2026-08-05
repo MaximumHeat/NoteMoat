@@ -1,26 +1,35 @@
-# Private Journal Digitizer
+# Note Moat by Beelzabuild
+# The Private Journal Digitizer
 
 Turn photographs of your handwritten journal into searchable Markdown notes —
 **entirely on your own machine**.
 
+Your notes are your notes. This is your digital moat. Don't give it up freely.
+
 No cloud. No Google, Anthropic, Microsoft, or any other company ever sees your
 pages. Your photos, your transcripts, and the AI model that reads them all stay
-local.
+local on your hardware.
 
 ## Why this project?
 
-Most people have never been told that a private option exists. The common path
-for "digitizing my journals" is uploading every page to a cloud service — a
-sacrifice most people don't really want to make for their most personal writing.
+Digital sovereignty is important. You have a right to have your most personal 
+thoughts, your private journals, ideas, and revelations digitized and privately 
+searchable on your own hardware without sacrificing privacy for convenience. 
+
+Most people will search "digitizing my journals" or ask an LLM & get a solution 
+that revolves around uploading every page to a cloud service — a
+sacrifice most people make out of convenience & feeling of necessity to keep up.
 
 Local AI has gotten good enough that this is no longer necessary:
 
-- A small open-weights vision model reads handwriting well, including print.
+- A small open weights vision model reads handwriting well, including cursive.
 - Your photos never leave the computer.
 - You keep the raw images, the transcripts, and the model files yourself.
 
 This project is a working, minimal scaffold to do exactly that. It is built to
-be readable and easy to modify — one Python file, standard library only.
+be readable and easy to modify — one Python file, standard library only. 
+
+The only other thing you need is the model (Qwen 2.5-VL recommended).
 
 ## What it does (the fix)
 
@@ -57,23 +66,25 @@ The script only ever talks to the URL in `vision_base` (default
 - **ffmpeg** (image rotate + downscale)
 - A **local vision model server**. This project was built against
   [llama.cpp](https://github.com/ggerganov/llama.cpp) with a
-  Qwen2.5-VL model. Any OpenAI-compatible endpoint works.
+  Qwen2.5-VL model. Any OpenAI compatible endpoint works.
 
 ## Quick start
 
 ### 1. Download a model
 
-Recommended (best handwriting quality, needs a decent GPU):
+Recommended (best handwriting quality, needs a decent GPU or unified RAM):
 
 ```bash
 ./download_model.sh 7b          # downloads to ./models
 ```
 
-On a smaller / CPU-only machine (lighter, weaker on messy handwriting):
+On a smaller/CPU only machine (lighter, weaker on messy handwriting, but works):
 
 ```bash
 ./download_model.sh 3b
 ```
+
+I recommend HuggingFace CLI: https://huggingface.co/docs/huggingface_hub/en/guides/cli 
 
 No `hf` CLI? Download the two files directly:
 
@@ -82,7 +93,7 @@ No `hf` CLI? Download the two files directly:
 | 7B (recommended) | [Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf](https://huggingface.co/ggml-org/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf) | [mmproj-Qwen2.5-VL-7B-Instruct-Q8_0.gguf](https://huggingface.co/ggml-org/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/mmproj-Qwen2.5-VL-7B-Instruct-Q8_0.gguf) |
 | 3B (light) | [Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf](https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/resolve/main/Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf) | [mmproj-Qwen2.5-VL-3B-Instruct-Q8_0.gguf](https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/resolve/main/mmproj-Qwen2.5-VL-3B-Instruct-Q8_0.gguf) |
 
-Both are **Apache-2.0** and run locally.
+Both are **Apache-2.0 Licensed** and run locally.
 
 ### 2. Start the vision server
 
@@ -95,7 +106,7 @@ docker run -d --name vision --gpus all \
   ghcr.io/ggml-org/llama.cpp:server-cuda \
   -m /models/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf \
   --mmproj /models/mmproj-Qwen2.5-VL-7B-Instruct-Q8_0.gguf \
-  -ngl 999 -c 32768 --host 0.0.0.0 --port 9011
+  -ngl 999 -c 32768 --host 0.0.0.0 --port 9011 
 ```
 
 Or with a pre-built `llama-server` binary from the
@@ -123,7 +134,7 @@ mirroring your photo folder layout, plus an `_Index.md`.
 | Files | ~4.7 GB + 853 MB projector | ~1.9 GB + projector |
 | Needs | ~8-10 GB VRAM, or a patient CPU | runs on much less, incl. CPU |
 | Handwriting | best quality, handles messy print | good but noticeably weaker on messy pages |
-| Speed | faster per page | slower if CPU-bound, but fits small GPUs |
+| Speed | faster per page | slower if CPU bound, but fits small GPUs |
 
 At any size, **review is recommended**. These models are a working scaffold —
 they massively cut the time to digitize a journal, but they are not a guarantee
@@ -174,7 +185,7 @@ May 15th - the garden is finally coming up. The tomatoes are about a foot tall..
 
 - Every request goes to `vision_base` — localhost by default. There is **no**
   cloud component, telemetry, or account.
-- The model files are open-weights and run on your hardware.
+- The model files are open weights and run on **your hardware**.
 - Your `config.json` contains your private paths — it is git-ignored and should
   never be committed.
 

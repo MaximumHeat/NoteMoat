@@ -2,6 +2,9 @@
 """
 digitize_journal.py - Transcribe photographed journal pages into Markdown notes.
 
+Note Moat By Beelzabuild - Beelzabuild@proton.me
+http://www.github.com/MaximumHeat/NoteMoat
+
 The pages never leave your computer: transcription happens through a local
 vision-language model served over an OpenAI-compatible HTTP API (e.g. llama.cpp).
 This script only talks to the address in `vision_base` (default: your own machine).
