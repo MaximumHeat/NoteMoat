@@ -1,0 +1,17 @@
+{
+  "images_root": "/path/to/your/journal-photos",
+  "vault_root": "/path/to/your/obsidian-vault",
+  "journal_subdir": "Journal",
+  "output_prefix": "",
+  "vision_base": "http://127.0.0.1:9011",
+  "model": "Qwen2.5-VL-7B-Instruct",
+  "ffmpeg": "ffmpeg",
+  "year_range": [1900, 2100],
+  "max_image_px": 2560,
+  "max_tokens": 12000,
+  "timeout_s": 300,
+  "temp_dir": "/tmp/journal-digitize",
+  "log_dir": "/tmp/journal-digitize",
+  "log_file": "digitize.log",
+  "write_index": true
+}

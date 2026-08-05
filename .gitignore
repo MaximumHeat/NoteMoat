@@ -1,0 +1,13 @@
+# User configuration (contains your private paths - never commit)
+config.json
+
+# Runtime artifacts
+temp/
+logs/
+*.log
+__pycache__/
+*.pyc
+.cache/
+
+# Downloaded models (large)
+models/
